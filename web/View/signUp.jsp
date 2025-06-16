@@ -21,7 +21,7 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #f5f7fa;
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -30,15 +30,18 @@
     }
 
     .signup-container {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
+      background: #ffffff;
       border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      box-shadow:
+              0 20px 40px rgba(0, 0, 0, 0.1),
+              0 8px 16px rgba(0, 0, 0, 0.06),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8);
       padding: 40px;
       width: 100%;
       max-width: 450px;
       position: relative;
       overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .signup-container::before {
@@ -48,7 +51,7 @@
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, #667eea, #764ba2);
+      background: linear-gradient(90deg, #27ae60, #2ecc71);
     }
 
     .logo-section {
@@ -59,17 +62,17 @@
     .logo {
       width: 80px;
       height: 80px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      background: linear-gradient(135deg, #27ae60, #2ecc71);
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 15px;
-      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      box-shadow: 0 10px 20px rgba(39, 174, 96, 0.3);
     }
 
     .logo::before {
-      content: '📋';
+      content: '🛡️';
       font-size: 32px;
     }
 
@@ -111,9 +114,9 @@
 
     .form-input:focus {
       outline: none;
-      border-color: #667eea;
+      border-color: #27ae60;
       background: #fff;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
       transform: translateY(-1px);
     }
 
@@ -134,17 +137,15 @@
 
     .form-select:focus {
       outline: none;
-      border-color: #667eea;
+      border-color: #27ae60;
       background: #fff;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
       transform: translateY(-1px);
     }
 
-
-
     .signup-btn {
       width: 100%;
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      background: linear-gradient(135deg, #27ae60, #2ecc71);
       color: white;
       border: none;
       padding: 16px;
@@ -159,8 +160,9 @@
     }
 
     .signup-btn:hover {
+      background: linear-gradient(135deg, #229954, #27ae60);
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+      box-shadow: 0 10px 25px rgba(39, 174, 96, 0.4);
     }
 
     .signup-btn:active {
@@ -203,8 +205,8 @@
 
     .signin-btn-link {
       background: transparent;
-      color: #667eea;
-      border: 2px solid #667eea;
+      color: #27ae60;
+      border: 2px solid #27ae60;
       padding: 12px 30px;
       border-radius: 8px;
       font-size: 14px;
@@ -215,17 +217,23 @@
     }
 
     .signin-btn-link:hover {
-      background: #667eea;
+      background: #27ae60;
       color: white;
       transform: translateY(-1px);
     }
 
     .message {
-      padding: 10px 15px;
+      padding: 12px;
       border-radius: 8px;
       margin-bottom: 20px;
       font-size: 14px;
       font-weight: 500;
+    }
+
+    .message[style*="red"] {
+      background: #ffeaea;
+      color: #e74c3c;
+      border: 1px solid #e74c3c;
     }
 
     .error-message {
@@ -264,13 +272,13 @@
     String error = request.getParameter("error");
     if ("true".equals(error)) {
   %>
-  <div class="message" style="color: red; background: #f8d7da; border: 1px solid #f5c6cb;">Registration failed. Please try again.</div>
+  <div class="message" style="color: red;">Registration failed. Please try again.</div>
   <%
     }
     String exists = request.getParameter("exists");
     if ("true".equals(exists)) {
   %>
-  <div class="message" style="color: red; background: #f8d7da; border: 1px solid #f5c6cb;">Username already exists. Please choose a different username.</div>
+  <div class="message" style="color: red;">Username already exists. Please choose a different username.</div>
   <%
     }
   %>
