@@ -294,8 +294,8 @@
         <span>Don't have an account?</span>
     </div>
 
-    <div class="signup-section">
-        <a href="/signup" class="signup-btn">
+    <div class="signup-section" >
+        <a href="signUp.jsp" class="signup-btn">
             Create Account
         </a>
     </div>

@@ -1,5 +1,7 @@
 package org.example.Dao;
 
+import org.example.Model.UserModel;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,5 +23,21 @@ public class UserDao {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         return resultSet;
+    }
+
+    public int signUp(UserModel userModel) throws SQLException {
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users (username, password, role, full_name) VALUES (?, ?, ?, ?)");
+        preparedStatement.setString(1, userModel.getUsername());
+        preparedStatement.setString(2, userModel.getPassword());
+        preparedStatement.setString(3, userModel.getRole());
+        preparedStatement.setString(4, userModel.getFull_name());
+        int result = preparedStatement.executeUpdate();
+
+        if (result > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

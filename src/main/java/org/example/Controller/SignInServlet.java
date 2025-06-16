@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 @WebServlet("/signin")
 public class SignInServlet extends HttpServlet {
-    @Resource(name = "jdbc/pool")
+    @Resource(name = "java:comp/env/jdbc/pool")
     private DataSource dataSource;
 
     @Override
