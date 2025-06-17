@@ -93,4 +93,14 @@ public class EmployeeDao {
         }
     }
 
+    public int deleteComplains(int complain_id) throws SQLException {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM complaints WHERE complaint_id = ?")) {
+            preparedStatement.setInt(1, complain_id);
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

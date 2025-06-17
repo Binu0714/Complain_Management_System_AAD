@@ -90,7 +90,20 @@ public class EmployeeServlet extends HttpServlet {
                 }
 
             } else if ("delete_complains".equals(action)) {
+                    int complainId = Integer.parseInt(req.getParameter("complaintId"));
 
+                    boolean isChecked = employeeDao.checkStatus(complainId);
+
+                    if (isChecked) {
+                        req.getSession().setAttribute("msg", "This complaint already in resolved state.. you can't delete");
+                    }else {
+                        int result = employeeDao.deleteComplains(complainId);
+                        if (result > 0) {
+                            req.getSession().setAttribute("msg", "Complaint deleted successfully");
+                        } else {
+                            req.getSession().setAttribute("msg", "Failed to delete complaint");
+                        }
+                    }
             }
 
             resp.sendRedirect(req.getContextPath() + "/employee");
