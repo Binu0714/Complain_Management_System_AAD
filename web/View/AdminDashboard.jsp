@@ -20,32 +20,71 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f7fa;
+            background: #f8f9fa;
             min-height: 100vh;
             color: #333;
         }
 
         .header {
-            background: #27ae60;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 1rem 2rem;
+            padding: 1.5rem 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .header h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #ffffff, #e3f2fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .logout-btn {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 0.6rem 1.8rem;
+            border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
@@ -53,12 +92,31 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logout-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .logout-btn:hover::before {
+            left: 100%;
         }
 
         .logout-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         .dashboard-container {
@@ -67,59 +125,124 @@
             margin: 0 auto;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
         }
 
         .stat-card {
             background: white;
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            border-left: 4px solid;
-            transition: transform 0.3s ease;
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            min-width: 200px;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--card-gradient);
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--card-color-light) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-card:hover::after {
+            opacity: 0.05;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
         }
 
-        .stat-card.total { border-left-color: #27ae60; }
-        .stat-card.pending { border-left-color: #f39c12; }
-        .stat-card.resolved { border-left-color: #27ae60; }
-        .stat-card.progress { border-left-color: #27ae60; }
-        .stat-card.users { border-left-color: #27ae60; }
+        .stat-card.total {
+            --card-color: #e74c3c;
+            --card-color-light: #ec7063;
+            --card-gradient: linear-gradient(90deg, #e74c3c, #ec7063);
+        }
+
+        .stat-card.pending {
+            --card-color: #f39c12;
+            --card-color-light: #f5b041;
+            --card-gradient: linear-gradient(90deg, #f39c12, #f5b041);
+        }
+
+        .stat-card.resolved {
+            --card-color: #27ae60;
+            --card-color-light: #58d68d;
+            --card-gradient: linear-gradient(90deg, #27ae60, #58d68d);
+        }
+
+        .stat-card.progress {
+            --card-color: #3498db;
+            --card-color-light: #5dade2;
+            --card-gradient: linear-gradient(90deg, #3498db, #5dade2);
+        }
+
+        .stat-card.users {
+            --card-color: #9b59b6;
+            --card-color-light: #bb8fce;
+            --card-gradient: linear-gradient(90deg, #9b59b6, #bb8fce);
+        }
 
         .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 2.8rem;
+            font-weight: 800;
             margin-bottom: 0.5rem;
+            color: var(--card-color);
+            position: relative;
+            z-index: 2;
         }
 
         .stat-label {
             color: #666;
             font-size: 0.9rem;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
         }
 
         .content-section {
             background: white;
-            border-radius: 15px;
+            border-radius: 16px;
             padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
             margin-bottom: 2rem;
+            border: 1px solid #f0f0f0;
         }
 
         .section-title {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             margin-bottom: 1.5rem;
             color: #333;
-            border-bottom: 2px solid #27ae60;
+            border-bottom: 3px solid #667eea;
             padding-bottom: 0.5rem;
+            font-weight: 700;
         }
 
         .form-grid {
@@ -143,9 +266,9 @@
 
         .form-input, .form-select, .form-textarea {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.8rem;
             border: 2px solid #e1e8ed;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 0.9rem;
             transition: all 0.3s ease;
             background: #f8f9fa;
@@ -153,9 +276,9 @@
 
         .form-input:focus, .form-select:focus, .form-textarea:focus {
             outline: none;
-            border-color: #27ae60;
+            border-color: #667eea;
             background: #fff;
-            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .form-textarea {
@@ -165,77 +288,91 @@
 
         .button-group {
             display: flex;
-            gap: 1rem;
+            justify-content: center;
+            gap: 1.5rem;
             flex-wrap: wrap;
             margin-bottom: 2rem;
         }
 
         .btn {
-            padding: 0.75rem 1.5rem;
+            padding: 0.8rem 2rem;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-save {
-            background: #27ae60;
-            color: white;
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
         }
 
-        .btn-save:hover {
-            background: #229954;
-            transform: translateY(-1px);
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-update {
-            background: #27ae60;
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
         }
 
         .btn-update:hover {
-            background: #229954;
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, #2980b9, #21618c);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
         }
 
         .btn-delete {
-            background: #e74c3c;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
         }
 
         .btn-delete:hover {
-            background: #c0392b;
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
         }
 
         .btn-clear {
-            background: #95a5a6;
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
             color: white;
         }
 
         .btn-clear:hover {
-            background: #7f8c8d;
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, #7f8c8d, #6c7b7d);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(149, 165, 166, 0.3);
         }
 
         .table-container {
             overflow-x: auto;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
         }
 
         .complaints-table {
             width: 100%;
             border-collapse: collapse;
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
         }
 
         .complaints-table th {
-            background: #27ae60;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             padding: 1rem;
             text-align: left;
@@ -277,15 +414,15 @@
         }
 
         .status-progress {
-            background: #e8f5e8;
-            color: #27ae60;
-            border: 1px solid #27ae60;
+            background: #e8f4fd;
+            color: #3498db;
+            border: 1px solid #3498db;
         }
 
         .action-btn {
             background: none;
             border: none;
-            color: #27ae60;
+            color: #667eea;
             cursor: pointer;
             font-size: 0.9rem;
             padding: 0.3rem 0.5rem;
@@ -294,7 +431,7 @@
         }
 
         .action-btn:hover {
-            background: #27ae60;
+            background: #667eea;
             color: white;
         }
 
@@ -305,6 +442,17 @@
             white-space: nowrap;
         }
 
+        @media (max-width: 1200px) {
+            .stats-container {
+                gap: 1rem;
+            }
+
+            .stat-card {
+                min-width: 180px;
+                padding: 1.5rem 1rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .dashboard-container {
                 padding: 1rem;
@@ -312,8 +460,20 @@
 
             .header {
                 padding: 1rem;
+            }
+
+            .header-content {
                 flex-direction: column;
                 gap: 1rem;
+            }
+
+            .stats-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stat-card {
+                min-width: 250px;
             }
 
             .form-grid {
@@ -322,6 +482,12 @@
 
             .button-group {
                 flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 200px;
+                justify-content: center;
             }
 
             .complaints-table {
@@ -337,15 +503,19 @@
 </head>
 <body>
 <div class="header">
-    <h1>🛡️ Admin Dashboard</h1>
-    <a href="${pageContext.request.contextPath}/logout" class="logout-btn">
-        🚪 Logout
-    </a>
+    <div class="header-content">
+        <div class="header-title">
+            <h1>Admin Dashboard</h1>
+        </div>
+        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">
+            Logout
+        </a>
+    </div>
 </div>
 
 <div class="dashboard-container">
     <!-- Statistics Cards -->
-    <div class="stats-grid">
+    <div class="stats-container">
         <div class="stat-card total">
             <div class="stat-number" id="totalComplaints">156</div>
             <div class="stat-label">Total Complaints</div>
@@ -405,10 +575,9 @@
             </div>
 
             <div class="button-group">
-                <button type="button" class="btn btn-save" onclick="saveComplaint()">💾 Save</button>
-                <button type="button" class="btn btn-update" onclick="updateComplaint()">✏️ Update</button>
-                <button type="button" class="btn btn-delete" onclick="deleteComplaint()">🗑️ Delete</button>
-                <button type="button" class="btn btn-clear" onclick="clearForm()">🔄 Clear</button>
+                <button type="button" class="btn btn-update">Update</button>
+                <button type="button" class="btn btn-delete">Delete</button>
+                <button type="button" class="btn btn-clear">Clear Form</button>
             </div>
         </form>
     </div>
@@ -440,7 +609,7 @@
                     <td><span class="status-badge status-resolved">Resolved</span></td>
                     <td>2025-06-15</td>
                     <td>
-                        <button class="action-btn" onclick="editComplaint(1)">✏️ Edit</button>
+                        <button class="action-btn" onclick="editComplaint(1)">Edit</button>
                     </td>
                 </tr>
                 <tr>
@@ -452,7 +621,7 @@
                     <td><span class="status-badge status-progress">In Progress</span></td>
                     <td>2025-06-16</td>
                     <td>
-                        <button class="action-btn" onclick="editComplaint(2)">✏️ Edit</button>
+                        <button class="action-btn" onclick="editComplaint(2)">Edit</button>
                     </td>
                 </tr>
                 <tr>
@@ -464,7 +633,7 @@
                     <td><span class="status-badge status-pending">Pending</span></td>
                     <td>2025-06-16</td>
                     <td>
-                        <button class="action-btn" onclick="editComplaint(3)">✏️ Edit</button>
+                        <button class="action-btn" onclick="editComplaint(3)">Edit</button>
                     </td>
                 </tr>
                 </tbody>

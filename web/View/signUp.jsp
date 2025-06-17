@@ -27,21 +27,19 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
+      color: #333;
     }
 
     .signup-container {
       background: #ffffff;
       border-radius: 20px;
-      box-shadow:
-              0 20px 40px rgba(0, 0, 0, 0.1),
-              0 8px 16px rgba(0, 0, 0, 0.06),
-              inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
       padding: 40px;
       width: 100%;
       max-width: 450px;
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      border: 1px solid #f0f0f0;
     }
 
     .signup-container::before {
@@ -51,7 +49,7 @@
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, #27ae60, #2ecc71);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
     .logo-section {
@@ -62,18 +60,33 @@
     .logo {
       width: 80px;
       height: 80px;
-      background: linear-gradient(135deg, #27ae60, #2ecc71);
+      background: linear-gradient(135deg, #667eea, #764ba2);
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 15px;
-      box-shadow: 0 10px 20px rgba(39, 174, 96, 0.3);
+      box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+      position: relative;
+      overflow: hidden;
     }
 
     .logo::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      opacity: 0.3;
+    }
+
+    .logo::after {
       content: '🛡️';
       font-size: 32px;
+      position: relative;
+      z-index: 2;
     }
 
     .system-title {
@@ -81,12 +94,18 @@
       font-size: 24px;
       font-weight: 700;
       margin-bottom: 5px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .system-subtitle {
       color: #666;
       font-size: 14px;
-      font-weight: 400;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .form-group {
@@ -114,9 +133,9 @@
 
     .form-input:focus {
       outline: none;
-      border-color: #27ae60;
+      border-color: #667eea;
       background: #fff;
-      box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
       transform: translateY(-1px);
     }
 
@@ -137,15 +156,15 @@
 
     .form-select:focus {
       outline: none;
-      border-color: #27ae60;
+      border-color: #667eea;
       background: #fff;
-      box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
       transform: translateY(-1px);
     }
 
     .signup-btn {
       width: 100%;
-      background: linear-gradient(135deg, #27ae60, #2ecc71);
+      background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
       border: none;
       padding: 16px;
@@ -157,12 +176,30 @@
       margin-top: 10px;
       position: relative;
       overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .signup-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .signup-btn:hover::before {
+      left: 100%;
     }
 
     .signup-btn:hover {
-      background: linear-gradient(135deg, #229954, #27ae60);
+      background: linear-gradient(135deg, #5a6fd8, #6a4c93);
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(39, 174, 96, 0.4);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
     }
 
     .signup-btn:active {
@@ -187,14 +224,11 @@
 
     .divider span {
       margin: 0 15px;
+      font-weight: 600;
     }
 
     .signin-section {
       text-align: center;
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 12px;
-      margin-top: 20px;
     }
 
     .signin-text {
@@ -204,36 +238,60 @@
     }
 
     .signin-btn-link {
-      background: transparent;
-      color: #27ae60;
-      border: 2px solid #27ae60;
+      background: rgba(102, 126, 234, 0.15);
+      color: #667eea;
+      border: 2px solid rgba(102, 126, 234, 0.2);
       padding: 12px 30px;
-      border-radius: 8px;
+      border-radius: 12px;
       font-size: 14px;
       font-weight: 600;
       text-decoration: none;
       display: inline-block;
       transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .signin-btn-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .signin-btn-link:hover::before {
+      left: 100%;
     }
 
     .signin-btn-link:hover {
-      background: #27ae60;
-      color: white;
+      background: rgba(102, 126, 234, 0.25);
+      color: #5a6fd8;
       transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+      border-color: rgba(102, 126, 234, 0.4);
     }
 
     .message {
-      padding: 12px;
-      border-radius: 8px;
+      padding: 12px 16px;
+      border-radius: 12px;
       margin-bottom: 20px;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
+      text-align: center;
+      border: 1px solid;
     }
 
     .message[style*="red"] {
       background: #ffeaea;
       color: #e74c3c;
-      border: 1px solid #e74c3c;
+      border-color: #e74c3c;
     }
 
     .error-message {
@@ -329,8 +387,8 @@
               required
       >
         <option value="">Choose your role...</option>
-        <option value="employee">👤 Employee</option>
-        <option value="admin">👑 Admin</option>
+        <option value="employee">Employee</option>
+        <option value="admin">Admin</option>
       </select>
     </div>
 
@@ -344,10 +402,7 @@
   </div>
 
   <div class="signin-section">
-    <p class="signin-text">Sign in to your existing account</p>
-    <a href="signIn.jsp" class="signin-btn-link">
-      Sign In
-    </a>
+    <a href="signIn.jsp" class="signin-btn-link">Sign In</a>
   </div>
 </div>
 </body>
