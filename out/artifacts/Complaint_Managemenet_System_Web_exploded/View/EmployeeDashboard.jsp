@@ -408,23 +408,24 @@
             letter-spacing: 1px;
         }
 
+        .status-in-progress {
+            background: #e8f4fd;
+            color: #3498db;
+            border: 1px solid #3498db;
+        }
+
         .status-pending {
-            background: #fef9e7;
+            background: #fff4e5;
             color: #f39c12;
             border: 1px solid #f39c12;
         }
 
         .status-resolved {
-            background: #eafaf1;
+            background: #e8fbe8;
             color: #27ae60;
             border: 1px solid #27ae60;
         }
 
-        .status-progress {
-            background: #e8f4fd;
-            color: #3498db;
-            border: 1px solid #3498db;
-        }
 
         .action-btn {
             background: none;
@@ -544,15 +545,15 @@
             <div class="stat-label">My Total Complaints</div>
         </div>
         <div class="stat-card pending">
-            <div class="stat-number" id="pendingComplaints">5</div>
+            <div class="stat-number" id="pendingComplaints"><%= request.getAttribute("pendingComplaints") != null ? request.getAttribute("pendingComplaints") : 0 %></div>
             <div class="stat-label">Pending</div>
         </div>
         <div class="stat-card progress">
-            <div class="stat-number" id="progressComplaints">4</div>
+            <div class="stat-number" id="progressComplaints"><%= request.getAttribute("progressComplaints") != null ? request.getAttribute("progressComplaints") : 0 %></div>
             <div class="stat-label">In Progress</div>
         </div>
         <div class="stat-card resolved">
-            <div class="stat-number" id="resolvedComplaints">3</div>
+            <div class="stat-number" id="resolvedComplaints"><%= request.getAttribute("resolvedComplaints") != null ? request.getAttribute("resolvedComplaints") : 0 %></div>
             <div class="stat-label">Resolved</div>
         </div>
     </div>
@@ -612,10 +613,12 @@
                     <td><%= c.getRemark() %></td>
                     <td><%= c.getTitle() %></td>
                     <td><%= c.getDescription() %></td>
+
                     <td>
-                        <span class="status status-<%= c.getStatus().toLowerCase().replace(" ", "-") %>">
+                       <span class="status status-<%= c.getStatus().toLowerCase().replace("_", "-").replace(" ", "-") %>">
                             <%= c.getStatus() %>
                         </span>
+
                     </td>
                     <td><%= c.getCreated_at() %></td>
                     <td><%= c.getUpdated_at() %></td>

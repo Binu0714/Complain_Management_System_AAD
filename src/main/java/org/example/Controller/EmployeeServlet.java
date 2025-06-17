@@ -139,8 +139,15 @@ public class EmployeeServlet extends HttpServlet {
 
             EmployeeDao employeeDao = new EmployeeDao(dataSource);
 
-            int totalComplaints = employeeDao.getTotalComplaintsByUser(uId);
+            int totalComplaints = complains.size();
+            int pendingCount = employeeDao.getCountByStatus(uId, "Pending");
+            int inProgressCount = employeeDao.getCountByStatus(uId, "In_Progress");
+            int resolvedCount = employeeDao.getCountByStatus(uId, "Resolved");
+
             req.setAttribute("totalComplaints", totalComplaints);
+            req.setAttribute("pendingComplaints", pendingCount);
+            req.setAttribute("progressComplaints", inProgressCount);
+            req.setAttribute("resolvedComplaints", resolvedCount);
 
             req.getRequestDispatcher("/View/EmployeeDashboard.jsp").forward(req, resp);
 

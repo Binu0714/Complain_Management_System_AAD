@@ -119,5 +119,20 @@ public class EmployeeDao {
         return 0;
     }
 
+    public int getCountByStatus(int userId, String status) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM complaints WHERE user_id = ? AND status = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.setString(2, status);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
 
 }
