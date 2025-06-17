@@ -103,4 +103,21 @@ public class EmployeeDao {
         }
     }
 
+    public int getTotalComplaintsByUser(int userId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM complaints WHERE user_id = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
+
 }

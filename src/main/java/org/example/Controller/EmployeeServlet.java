@@ -117,6 +117,7 @@ public class EmployeeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("doGet triggered...");
 
+
         String userId = (String) req.getSession().getAttribute("user_id");
         if (userId == null || userId.isBlank()) {
             resp.sendRedirect(req.getContextPath() + "/login");
@@ -135,6 +136,12 @@ public class EmployeeServlet extends HttpServlet {
         try {
             List<AdminEmployeeModel> complains = new EmployeeDao(dataSource).getAllComplains(uId);
             req.setAttribute("complains", complains);
+
+            EmployeeDao employeeDao = new EmployeeDao(dataSource);
+
+            int totalComplaints = employeeDao.getTotalComplaintsByUser(uId);
+            req.setAttribute("totalComplaints", totalComplaints);
+
             req.getRequestDispatcher("/View/EmployeeDashboard.jsp").forward(req, resp);
 
         } catch (SQLException e) {

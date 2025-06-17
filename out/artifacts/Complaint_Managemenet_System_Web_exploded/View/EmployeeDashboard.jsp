@@ -540,7 +540,7 @@
     <!-- Statistics Cards -->
     <div class="stats-container">
         <div class="stat-card total">
-            <div class="stat-number" id="totalComplaints">12</div>
+            <div class="stat-number" id="totalComplaints"><%= request.getAttribute("totalComplaints") != null ? request.getAttribute("totalComplaints") : 0 %></div>
             <div class="stat-label">My Total Complaints</div>
         </div>
         <div class="stat-card pending">
