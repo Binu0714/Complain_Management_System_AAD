@@ -1,4 +1,5 @@
-<%--
+<%@ page import="org.example.Model.AdminEmployeeModel" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Umesh Induwara
   Date: 6/16/2025
@@ -401,22 +402,23 @@
             letter-spacing: 1px;
         }
 
+        .status-in-progress {
+            white-space: nowrap;
+            background: #e8f4fd;
+            color: #3498db;
+            border: 1px solid #3498db;
+        }
+
         .status-pending {
-            background: #fef9e7;
+            background: #fff4e5;
             color: #f39c12;
             border: 1px solid #f39c12;
         }
 
         .status-resolved {
-            background: #eafaf1;
+            background: #e8fbe8;
             color: #27ae60;
             border: 1px solid #27ae60;
-        }
-
-        .status-progress {
-            background: #e8f4fd;
-            color: #3498db;
-            border: 1px solid #3498db;
         }
 
         .action-btn {
@@ -507,7 +509,7 @@
         <div class="header-title">
             <h1>Admin Dashboard</h1>
         </div>
-        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">
+        <a href="View/signIn.jsp" class="logout-btn">
             Logout
         </a>
     </div>
@@ -541,7 +543,7 @@
     <!-- Complaint Management Form -->
     <div class="content-section">
         <h2 class="section-title">Complaint Management</h2>
-        <form id="complaintForm">
+        <form id="complaintForm" action="${pageContext.request.contextPath}/admin" method="post">
             <div class="form-grid">
                 <div class="form-group">
                     <label for="userId" class="form-label">User ID</label>
@@ -567,17 +569,17 @@
                     <label for="status" class="form-label">Status</label>
                     <select id="status" name="status" class="form-select" required>
                         <option value="">Select Status</option>
-                        <option value="pending">Pending</option>
-                        <option value="progress">In Progress</option>
-                        <option value="resolved">Resolved</option>
+                        <option value="pending">PENDING</option>
+                        <option value="progress">IN_PROGRESS</option>
+                        <option value="resolved">RESOLVED</option>
                     </select>
                 </div>
             </div>
 
             <div class="button-group">
-                <button type="button" class="btn btn-update">Update</button>
-                <button type="button" class="btn btn-delete">Delete</button>
-                <button type="button" class="btn btn-clear">Clear Form</button>
+                <button type="submit" class="btn btn-update" id="update-btn" value="update_complains">Update</button>
+                <button type="submit" class="btn btn-delete" id="delete-btn" value="delete_complains">Delete</button>
+                <button type="submit" class="btn btn-clear" id="clear-btn" value="clear_complains">Clear Form</button>
             </div>
         </form>
     </div>
@@ -595,47 +597,38 @@
                     <th>Description</th>
                     <th>Remark</th>
                     <th>Status</th>
-                    <th>Date</th>
-                    <th>Actions</th>
+                    <th>Date Created</th>
+                    <th>Date Updated</th>
                 </tr>
                 </thead>
                 <tbody id="complaintsTableBody">
-                <tr>
-                    <td>1</td>
-                    <td>USR001</td>
-                    <td>Login Issue</td>
-                    <td class="description-cell">Unable to login to the system with correct credentials</td>
-                    <td>Password reset required</td>
-                    <td><span class="status-badge status-resolved">Resolved</span></td>
-                    <td>2025-06-15</td>
+                <%
+                    List<AdminEmployeeModel> complaintList = (List<AdminEmployeeModel>) request.getAttribute("complains");
+                    if (complaintList != null && !complaintList.isEmpty()) {
+                        for (AdminEmployeeModel c : complaintList) {
+                %>
+                <tr onclick="selectComplaint('<%= c.getComplain_id() %>', '<%= c.getUser_id() %>', '<%= c.getTitle() %>', '<%= c.getDescription() %>', '<%= c.getRemark() %>', '<%= c.getStatus() %>', '<%= c.getCreated_at() %>')">
+                    <td><%= c.getComplain_id() %></td>
+                    <td><%= c.getUser_id() %></td>
+                    <td><%= c.getTitle() %></td>
+                    <td><%= c.getDescription() %></td>
+                    <td><%= c.getRemark() != null ? c.getRemark() : "No remark" %></td>
                     <td>
-                        <button class="action-btn" onclick="editComplaint(1)">Edit</button>
+                        <span class="status status-<%= c.getStatus().toLowerCase().replace("_", "-").replace(" ", "-") %>">
+                            <%= c.getStatus().replace("_", " ") %>
+                        </span>
                     </td>
+                    <td><%= c.getCreated_at() %></td>
+                    <td><%= c.getUpdated_at() %></td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>USR002</td>
-                    <td>System Error</td>
-                    <td class="description-cell">Getting 500 error when trying to submit forms</td>
-                    <td>Under investigation</td>
-                    <td><span class="status-badge status-progress">In Progress</span></td>
-                    <td>2025-06-16</td>
-                    <td>
-                        <button class="action-btn" onclick="editComplaint(2)">Edit</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>USR003</td>
-                    <td>Feature Request</td>
-                    <td class="description-cell">Need export functionality for reports</td>
-                    <td>-</td>
-                    <td><span class="status-badge status-pending">Pending</span></td>
-                    <td>2025-06-16</td>
-                    <td>
-                        <button class="action-btn" onclick="editComplaint(3)">Edit</button>
-                    </td>
-                </tr>
+                <%
+                    }
+                } else {
+                %>
+                <tr><td colspan="8" class="no-data">📭 No complaints found in the system.</td></tr>
+                <%
+                    }
+                %>
                 </tbody>
             </table>
         </div>
