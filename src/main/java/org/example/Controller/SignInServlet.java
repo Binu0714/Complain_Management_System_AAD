@@ -37,10 +37,15 @@ public class SignInServlet extends HttpServlet {
                 req.getSession().setAttribute("username", username);
 
                 if ("ADMIN".equals(role)) {
-                    req.getRequestDispatcher("admin").forward(req, resp);
-                }else {
-                    req.getRequestDispatcher("employee").forward(req, resp);
+                    req.getRequestDispatcher("/View/AdminDashboard.jsp").forward(req, resp);
+                    System.out.println("admin page");
+                    return;
+                } else {
+                    req.getRequestDispatcher("/View/EmployeeDashboard.jsp").forward(req, resp);
+                    System.out.println("employee page");
+                    return;
                 }
+
 
             }else {
                 req.getRequestDispatcher("View/signIn.jsp?error=true").forward(req, resp);

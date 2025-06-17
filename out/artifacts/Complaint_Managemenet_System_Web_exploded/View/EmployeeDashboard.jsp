@@ -512,7 +512,6 @@
     <div class="header-content">
         <div class="header-title">
             <h1>Employee Dashboard</h1>
-            <span class="header-badge">Complaint Management</span>
         </div>
         <a href="${pageContext.request.contextPath}/logout" class="logout-btn">
             Logout
@@ -544,7 +543,7 @@
     <!-- Complaint Form -->
     <div class="content-section">
         <h2 class="section-title">Submit New Complaint</h2>
-        <form id="complaintForm">
+        <form id="complaintForm" action="${pageContext.request.contextPath}/employee" method="post">
             <div class="form-group">
                 <label for="complaintTitle" class="form-label">Complaint Title</label>
                 <input type="text" id="complaintTitle" name="complaintTitle" class="form-input" placeholder="Enter your complaint title" required>
@@ -556,10 +555,10 @@
             </div>
 
             <div class="button-group">
-                <button type="button" class="btn btn-add">Add Complaint</button>
-                <button type="button" class="btn btn-update">Update</button>
-                <button type="button" class="btn btn-delete">Delete</button>
-                <button type="button" class="btn btn-clear">Clear Form</button>
+                <button type="submit" class="btn btn-add" name="action" value="add_complains">Add Complaint</button>
+                <button type="submit" class="btn btn-update" name="action" value="update_complains">Update</button>
+                <button type="submit" class="btn btn-delete" name="action" value="delete_complains">Delete</button>
+                <button type="submit" class="btn btn-clear" name="action">Clear Form</button>
             </div>
         </form>
     </div>
