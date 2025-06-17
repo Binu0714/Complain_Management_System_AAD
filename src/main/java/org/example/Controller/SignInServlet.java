@@ -38,7 +38,7 @@ public class SignInServlet extends HttpServlet {
 
                 if ("ADMIN".equals(role)) {
                     System.out.println("admin page");
-                    resp.sendRedirect(req.getContextPath() + "/admin");
+                    req.getRequestDispatcher("View/AdminDashboard.jsp").forward(req, resp);
                 } else {
                     System.out.println("employee page");
                     resp.sendRedirect(req.getContextPath() + "/employee");

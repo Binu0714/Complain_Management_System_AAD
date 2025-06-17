@@ -531,7 +531,7 @@
         <div class="header-title">
             <h1>Employee Dashboard</h1>
         </div>
-        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">
+        <a href="View/signIn.jsp" class="logout-btn">
             Logout
         </a>
     </div>
