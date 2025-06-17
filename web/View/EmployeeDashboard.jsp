@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+<%@ page import="org.example.Model.AdminEmployeeModel" %>
 <%--
   Created by IntelliJ IDEA.
   User: Umesh Induwara
@@ -544,6 +546,9 @@
     <div class="content-section">
         <h2 class="section-title">Submit New Complaint</h2>
         <form id="complaintForm" action="${pageContext.request.contextPath}/employee" method="post">
+
+            <input type="hidden" id="complaint_id" name="complaint_id">
+
             <div class="form-group">
                 <label for="complaintTitle" class="form-label">Complaint Title</label>
                 <input type="text" id="complaintTitle" name="complaintTitle" class="form-input" placeholder="Enter your complaint title" required>
@@ -556,9 +561,9 @@
 
             <div class="button-group">
                 <button type="submit" class="btn btn-add" name="action" value="add_complains">Add Complaint</button>
-                <button type="submit" class="btn btn-update" name="action" value="update_complains">Update</button>
-                <button type="submit" class="btn btn-delete" name="action" value="delete_complains">Delete</button>
-                <button type="submit" class="btn btn-clear" name="action">Clear Form</button>
+                <button type="submit" id="updateBtn" class="btn btn-update" name="action" value="update_complains" disabled>Update</button>
+                <button type="submit" id="deleteBtn" class="btn btn-delete" name="action" value="delete_complains" disabled>Delete</button>
+                <button type="button" class="btn btn-clear" onclick="clearForm()">Clear Form</button>
             </div>
         </form>
     </div>
@@ -571,80 +576,61 @@
                 <thead>
                 <tr>
                     <th>ID</th>
+                    <th>User_ID</th>
+                    <th>Admin Remark</th>
                     <th>Title</th>
                     <th>Description</th>
                     <th>Status</th>
-                    <th>Date Submitted</th>
-                    <th>Admin Remark</th>
-                    <th>Actions</th>
+                    <th>Date Created</th>
+                    <th>Date Updated</th>
                 </tr>
                 </thead>
                 <tbody id="complaintsTableBody">
-                <tr>
-                    <td>1</td>
-                    <td>System Login Issue</td>
-                    <td class="description-cell">Unable to access my account even with correct credentials. Getting error message.</td>
-                    <td><span class="status-badge status-resolved">Resolved</span></td>
-                    <td>2025-06-15</td>
-                    <td>Password has been reset. Check your email.</td>
+                <%
+                    List<AdminEmployeeModel> complaintList = (List<AdminEmployeeModel>) request.getAttribute("complains");
+                    if (complaintList != null && !complaintList.isEmpty()) {
+                        for (AdminEmployeeModel c : complaintList) {
+                %>
+                <tr onclick="selectComplaint('<%= c.getComplain_id() %>', '<%= c.getTitle().replace("'", "\\'") %>', '<%= c.getDescription().replace("'", "\\'") %>')">
+                    <td><%= c.getComplain_id() %></td>
+                    <td><%= c.getUser_id() %></td>
+                    <td><%= c.getRemark() %></td>
+                    <td><%= c.getTitle() %></td>
+                    <td><%= c.getDescription() %></td>
                     <td>
-                        <button class="action-btn" onclick="editComplaint(1)">Edit</button>
-                        <button class="action-btn" onclick="viewComplaint(1)">View</button>
+                        <span class="status status-<%= c.getStatus().toLowerCase().replace(" ", "-") %>">
+                            <%= c.getStatus() %>
+                        </span>
                     </td>
+                    <td><%= c.getCreated_at() %></td>
+                    <td><%= c.getUpdated_at() %></td>
                 </tr>
+                <%
+                    }
+                } else {
+                %>
                 <tr>
-                    <td>2</td>
-                    <td>Network Connectivity</td>
-                    <td class="description-cell">Frequent network disconnections in office area. Affecting work productivity.</td>
-                    <td><span class="status-badge status-progress">In Progress</span></td>
-                    <td>2025-06-16</td>
-                    <td>IT team is investigating the issue.</td>
-                    <td>
-                        <button class="action-btn" onclick="editComplaint(2)">Edit</button>
-                        <button class="action-btn" onclick="viewComplaint(2)">View</button>
-                    </td>
+                    <td colspan="8" class="no-data">No complaints found.</td>
                 </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Printer Not Working</td>
-                    <td class="description-cell">Office printer on 3rd floor is not printing documents. Shows error message.</td>
-                    <td><span class="status-badge status-pending">Pending</span></td>
-                    <td>2025-06-16</td>
-                    <td>-</td>
-                    <td>
-                        <button class="action-btn">Edit</button>
-                        <button class="action-btn">View</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Air Conditioning Issue</td>
-                    <td class="description-cell">AC in conference room B is not working properly. Temperature too high for meetings.</td>
-                    <td><span class="status-badge status-pending">Pending</span></td>
-                    <td>2025-06-17</td>
-                    <td>-</td>
-                    <td>
-                        <button class="action-btn">Edit</button>
-                        <button class="action-btn">View</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Software License Issue</td>
-                    <td class="description-cell">Need access to Adobe Creative Suite for design work. Current license expired.</td>
-                    <td><span class="status-badge status-progress">In Progress</span></td>
-                    <td>2025-06-17</td>
-                    <td>Procurement team is renewing the license.</td>
-                    <td>
-                        <button class="action-btn">Edit</button>
-                        <button class="action-btn">View</button>
-                    </td>
-                </tr>
+                <%
+                    }
+                %>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
+<script>
+    function selectComplains(id,title,description) {
+        document.getElementById('complaint_id').value = id;
+        document.getElementById('title').value = title;
+        document.getElementById('description').value = description;
+        document.getElementById('updateBtn').disabled = false;
+        document.getElementById('deleteBtn').disabled = false;
+
+        document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
 </body>
 </html>

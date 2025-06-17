@@ -5,7 +5,10 @@ import org.example.Model.AdminEmployeeModel;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeDao {
     private DataSource dataSource;
@@ -29,5 +32,35 @@ public class EmployeeDao {
         }
     }
 
+    public List<AdminEmployeeModel> getAllComplains(int user_id) throws SQLException {
+        List<AdminEmployeeModel> complains = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM complaints WHERE user_id = ?")) {
+
+            preparedStatement.setInt(1, user_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                AdminEmployeeModel complain = new AdminEmployeeModel();
+                complain.setComplain_id(resultSet.getInt("complaint_id"));
+                complain.setUser_id(resultSet.getInt("user_id"));
+                complain.setTitle(resultSet.getString("title"));
+                complain.setDescription(resultSet.getString("description"));
+                complain.setStatus(resultSet.getString("status"));
+                complain.setCreated_at(resultSet.getString("created_at"));
+                complain.setUpdated_at(resultSet.getString("updated_at"));
+                complain.setRemark(resultSet.getString("remark"));
+
+                complains.add(complain);
+                System.out.println("Session user_id: " + user_id);
+                System.out.println("Found complaint: " + complain.getComplain_id());
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return complains;
+    }
 
 }
