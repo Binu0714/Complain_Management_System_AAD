@@ -64,7 +64,33 @@ public class EmployeeDao {
     }
 
     public int updateComplains(AdminEmployeeModel adminEmployeeModel) throws SQLException {
-        return 0;
+        try(Connection connection = dataSource.getConnection();) {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE complaints SET title = ?, description = ? WHERE complaint_id = ?");
+            preparedStatement.setString(1, adminEmployeeModel.getTitle());
+            preparedStatement.setString(2, adminEmployeeModel.getDescription());
+            preparedStatement.setInt(3, adminEmployeeModel.getComplain_id());
+            int result = preparedStatement.executeUpdate();
+            return result;
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean checkStatus(int complain_id) throws SQLException {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT status FROM complaints WHERE complaint_id = ?")){
+            preparedStatement.setInt(1, complain_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String status = resultSet.getString("status");
+                return status.equals("RESOLVED");
+            }
+            return false;
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

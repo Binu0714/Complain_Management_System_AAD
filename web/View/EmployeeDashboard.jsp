@@ -510,6 +510,21 @@
     </style>
 </head>
 <body>
+
+<%
+    String msg = (String) session.getAttribute("msg");
+    if (msg != null) {
+%>
+
+<script>
+    alert("<%= msg %>");
+</script>
+
+<%
+        session.removeAttribute("msg");
+    }
+%>
+
 <div class="header">
     <div class="header-content">
         <div class="header-title">
@@ -547,7 +562,7 @@
         <h2 class="section-title">Submit New Complaint</h2>
         <form id="complaintForm" action="${pageContext.request.contextPath}/employee" method="post">
 
-            <input type="hidden" id="complaint_id" name="complaint_id">
+            <input type="hidden" id="complaintId" name="complaintId" value="">
 
             <div class="form-group">
                 <label for="complaintTitle" class="form-label">Complaint Title</label>
@@ -591,7 +606,7 @@
                     if (complaintList != null && !complaintList.isEmpty()) {
                         for (AdminEmployeeModel c : complaintList) {
                 %>
-                <tr onclick="selectComplaint('<%= c.getComplain_id() %>', '<%= c.getTitle().replace("'", "\\'") %>', '<%= c.getDescription().replace("'", "\\'") %>')">
+                <tr onclick="selectComplains('<%= c.getComplain_id() %>', '<%= c.getTitle().replace("'", "\\'") %>', '<%= c.getDescription().replace("'", "\\'") %>')">
                     <td><%= c.getComplain_id() %></td>
                     <td><%= c.getUser_id() %></td>
                     <td><%= c.getRemark() %></td>
@@ -622,15 +637,25 @@
 </div>
 
 <script>
-    function selectComplains(id,title,description) {
-        document.getElementById('complaint_id').value = id;
-        document.getElementById('title').value = title;
-        document.getElementById('description').value = description;
+    function selectComplains(id, title, description) {
+        document.getElementById('complaintId').value = id;
+        document.getElementById('complaintTitle').value = title;
+        document.getElementById('complaintDescription').value = description;
+
         document.getElementById('updateBtn').disabled = false;
         document.getElementById('deleteBtn').disabled = false;
 
-        document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+        document.querySelector('.content-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function clearForm() {
+        document.getElementById('complaintId').value = "";
+        document.getElementById('complaintTitle').value = "";
+        document.getElementById('complaintDescription').value = "";
+        document.getElementById('updateBtn').disabled = true;
+        document.getElementById('deleteBtn').disabled = true;
     }
 </script>
+
 </body>
 </html>
