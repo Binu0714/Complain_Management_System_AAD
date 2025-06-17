@@ -63,4 +63,8 @@ public class EmployeeDao {
         return complains;
     }
 
+    public int updateComplains(AdminEmployeeModel adminEmployeeModel) throws SQLException {
+        return 0;
+    }
+
 }
