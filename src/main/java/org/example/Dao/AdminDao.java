@@ -70,4 +70,37 @@ public class AdminDao {
         }
     }
 
+    public int getCountByStatus(String status) throws SQLException {
+        String sql = "SELECT COUNT(*) AS total FROM complaints WHERE status = ?";
+        int count = 0;
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, status);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt("total");
+                }
+            }
+        }
+        return count;
+    }
+
+    public int getTotalUsers() throws SQLException {
+        String sql = "SELECT COUNT(*) AS total FROM users";
+        int count = 0;
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                count = rs.getInt("total");
+            }
+        }
+        return count;
+    }
+
+
 }

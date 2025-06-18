@@ -85,8 +85,24 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            List<AdminEmployeeModel> complains = new AdminDao(dataSource).getAllComplains();
+            AdminDao adminDao = new AdminDao(dataSource);
+
+            List<AdminEmployeeModel> complains = adminDao.getAllComplains();
             req.setAttribute("complains", complains);
+
+            int totalComplains = complains.size();
+            int pendingCount = adminDao.getCountByStatus("Pending");
+            int inProgressCount = adminDao.getCountByStatus("In_Progress");
+            int resolvedCount = adminDao.getCountByStatus("Resolved");
+            int totalUsers = adminDao.getTotalUsers();
+
+            req.setAttribute("total",totalComplains);
+            req.setAttribute("pending", pendingCount);
+            req.setAttribute("progress", inProgressCount);
+            req.setAttribute("resolved", resolvedCount);
+            req.setAttribute("users",totalUsers);
+
+
             req.getRequestDispatcher("View/AdminDashboard.jsp").forward(req, resp);
         }catch (SQLException e) {
             throw new RuntimeException(e);

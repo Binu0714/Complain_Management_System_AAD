@@ -519,23 +519,23 @@
     <!-- Statistics Cards -->
     <div class="stats-container">
         <div class="stat-card total">
-            <div class="stat-number" id="totalComplaints">156</div>
+            <div class="stat-number" id="totalComplaints"><%= request.getAttribute("total") %></div>
             <div class="stat-label">Total Complaints</div>
         </div>
         <div class="stat-card pending">
-            <div class="stat-number" id="pendingComplaints">42</div>
+            <div class="stat-number" id="pendingComplaints"><%= request.getAttribute("pending") %></div>
             <div class="stat-label">Pending Complaints</div>
         </div>
         <div class="stat-card resolved">
-            <div class="stat-number" id="resolvedComplaints">89</div>
+            <div class="stat-number" id="resolvedComplaints"><%= request.getAttribute("resolved") %></div>
             <div class="stat-label">Resolved Complaints</div>
         </div>
         <div class="stat-card progress">
-            <div class="stat-number" id="progressComplaints">25</div>
+            <div class="stat-number" id="progressComplaints"><%= request.getAttribute("progress") %></div>
             <div class="stat-label">In Progress</div>
         </div>
         <div class="stat-card users">
-            <div class="stat-number" id="totalUsers">78</div>
+            <div class="stat-number" id="totalUsers"><%= request.getAttribute("users") %></div>
             <div class="stat-label">Total Users</div>
         </div>
     </div>
