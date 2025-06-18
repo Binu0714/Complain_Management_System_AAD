@@ -544,10 +544,14 @@
     <div class="content-section">
         <h2 class="section-title">Complaint Management</h2>
         <form id="complaintForm" action="${pageContext.request.contextPath}/admin" method="post">
+
+            <input type="hidden" name="complain_id" id="complain_id" value="">
+            <input type="hidden" name="created_at" id="created_at" value="">
+
             <div class="form-grid">
                 <div class="form-group">
                     <label for="userId" class="form-label">User ID</label>
-                    <input type="text" id="userId" name="userId" class="form-input" placeholder="Enter User ID" required>
+                    <input type="text" id="userId" name="user_id" class="form-input" placeholder="Enter User ID" required>
                 </div>
                 <div class="form-group">
                     <label for="complaintTitle" class="form-label">Complaint Title</label>
@@ -569,17 +573,17 @@
                     <label for="status" class="form-label">Status</label>
                     <select id="status" name="status" class="form-select" required>
                         <option value="">Select Status</option>
-                        <option value="pending">PENDING</option>
-                        <option value="progress">IN_PROGRESS</option>
-                        <option value="resolved">RESOLVED</option>
+                        <option value="PENDING">PENDING</option>
+                        <option value="IN_PROGRESS">IN_PROGRESS</option>
+                        <option value="RESOLVED">RESOLVED</option>
                     </select>
                 </div>
             </div>
 
             <div class="button-group">
-                <button type="submit" class="btn btn-update" id="update-btn" value="update_complains">Update</button>
-                <button type="submit" class="btn btn-delete" id="delete-btn" value="delete_complains">Delete</button>
-                <button type="submit" class="btn btn-clear" id="clear-btn" value="clear_complains">Clear Form</button>
+                <button name="action" type="submit" class="btn btn-update" id="update-btn" value="update_complains">Update</button>
+                <button name="action" type="submit" class="btn btn-delete" id="delete-btn" value="delete_complains">Delete</button>
+                <button name="action" type="submit" class="btn btn-clear" id="clear-btn" value="clear_complains">Clear Form</button>
             </div>
         </form>
     </div>
@@ -607,7 +611,7 @@
                     if (complaintList != null && !complaintList.isEmpty()) {
                         for (AdminEmployeeModel c : complaintList) {
                 %>
-                <tr onclick="selectComplaint('<%= c.getComplain_id() %>', '<%= c.getUser_id() %>', '<%= c.getTitle() %>', '<%= c.getDescription() %>', '<%= c.getRemark() %>', '<%= c.getStatus() %>', '<%= c.getCreated_at() %>')">
+                <tr onclick="selectComplains('<%= c.getComplain_id() %>', '<%= c.getUser_id() %>', '<%= c.getTitle() %>', '<%= c.getDescription() %>', '<%= c.getRemark() %>', '<%= c.getStatus() %>', '<%= c.getCreated_at() %>')">
                     <td><%= c.getComplain_id() %></td>
                     <td><%= c.getUser_id() %></td>
                     <td><%= c.getTitle() %></td>
@@ -635,5 +639,21 @@
     </div>
 </div>
 
+<script>
+
+    function selectComplains(id, user_id, title, description, remark, status, created_at) {
+        document.getElementById("complain_id").value = id;
+        document.getElementById("userId").value = user_id;
+        document.getElementById("complaintTitle").value = title;
+        document.getElementById("description").value = description;
+        document.getElementById("remark").value = remark;
+        document.getElementById("created_at").value = created_at;
+        document.getElementById("status").value = status;
+
+        document.getElementById("update-btn").disabled = false;
+        document.getElementById("delete-btn").disabled = false;
+    }
+    
+</script>
 </body>
 </html>

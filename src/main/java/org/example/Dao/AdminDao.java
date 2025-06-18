@@ -41,4 +41,23 @@ public class AdminDao {
         return complains;
     }
 
+    public int updateComplains(AdminEmployeeModel adminEmployeeModel) throws SQLException {
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE complaints SET user_id = ?, title = ?, description = ?, status = ?, created_at = ?, remark = ? WHERE complaint_id = ?");
+
+            preparedStatement.setInt(1, adminEmployeeModel.getUser_id());
+            preparedStatement.setString(2, adminEmployeeModel.getTitle());
+            preparedStatement.setString(3, adminEmployeeModel.getDescription());
+            preparedStatement.setString(4, adminEmployeeModel.getStatus());
+            preparedStatement.setString(5, adminEmployeeModel.getCreated_at());
+            preparedStatement.setString(6, adminEmployeeModel.getRemark());
+            preparedStatement.setInt(7, adminEmployeeModel.getComplain_id());
+
+            int result = preparedStatement.executeUpdate();
+            return result;
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
