@@ -1,6 +1,3 @@
-Here is your complete `README.md` in **Markdown format**, ready to be added to your GitHub project:
-
-````markdown
 # 🚀 Complaint Management System (CMS)
 
 A web-based Java EE application designed to streamline the submission and resolution of user complaints. The CMS supports role-based access for **Users** and **Administrators**, delivering a clean interface to track, manage, and resolve complaints efficiently.
@@ -59,7 +56,7 @@ This system is designed using the **Model-View-Controller (MVC)** pattern with f
 1. Create a MySQL database:
    ```sql
    CREATE DATABASE complaint_management_db;
-````
+
 
 2. Run the SQL script to generate tables:
 
@@ -152,11 +149,8 @@ All code is authored individually, following academic integrity guidelines.
 
 ## 👨‍💻 Author
 
-**Name**: Binu Jinajith
-**Batch**: IJSE GDSE-71
-**Branch**: Panadura
+* **Name**: Binu Jinajith
+* **Batch**: IJSE GDSE-71
+* **Branch**: Panadura
 
-```
 
-✅ You can paste this directly into your `README.md` file in your GitHub repository. Let me know if you also need a sample `database_schema.sql`.
-```
