@@ -512,20 +512,6 @@
 </head>
 <body>
 
-<%
-    String msg = (String) session.getAttribute("msg");
-    if (msg != null) {
-%>
-
-<script>
-    alert("<%= msg %>");
-</script>
-
-<%
-        session.removeAttribute("msg");
-    }
-%>
-
 <div class="header">
     <div class="header-content">
         <div class="header-title">
@@ -638,6 +624,25 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<%
+    String msg = (String) session.getAttribute("complaintMessage");
+    String msgText = (String) session.getAttribute("complaintMessageText");
+
+    if (msg != null && msgText != null) {
+        session.removeAttribute("complaintMessage");
+        session.removeAttribute("complaintMessageText");
+%>
+<script>
+    Swal.fire({
+        icon: '<%= msg %>',
+        title: '<%= msgText %>',
+        showConfirmButton: <%= "success".equals(msg) ? "false" : "true" %>,
+        timer: <%= "success".equals(msg) ? "2000" : "null" %>
+    });
+</script>
+<% } %>
 
 <script>
     function selectComplains(id, title, description) {

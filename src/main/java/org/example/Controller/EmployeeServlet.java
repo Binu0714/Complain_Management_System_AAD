@@ -54,9 +54,11 @@ public class EmployeeServlet extends HttpServlet {
                 int result = employeeDao.saveComplains(adminEmployeeModel);
 
                 if (result > 0) {
-                    req.getSession().setAttribute("msg", "Complaint added successfully");
+                    req.getSession().setAttribute("complaintMessage", "success");
+                    req.getSession().setAttribute("complaintMessageText", "Complaint Saved Successfully!");
                 } else {
-                    req.getSession().setAttribute("msg", "Failed to add complaint");
+                    req.getSession().setAttribute("complaintMessage", "error");
+                    req.getSession().setAttribute("complaintMessageText", "Failed to Save Complain.Please try again.");
                 }
 
             } else if ("update_complains".equals(action)) {
@@ -82,9 +84,11 @@ public class EmployeeServlet extends HttpServlet {
                         int result = employeeDao.updateComplains(adminEmployeeModel);
 
                         if (result > 0) {
-                            req.getSession().setAttribute("msg", "Complaint updated successfully");
+                            req.getSession().setAttribute("complaintMessage", "success");
+                            req.getSession().setAttribute("complaintMessageText", "Complaint Updated Successfully!");
                         } else {
-                            req.getSession().setAttribute("msg", "Failed to update complaint");
+                            req.getSession().setAttribute("complaintMessage", "error");
+                            req.getSession().setAttribute("complaintMessageText", "Failed to Update Complain.Please try again.");
                         }
                     }
                 }
@@ -98,10 +102,13 @@ public class EmployeeServlet extends HttpServlet {
                         req.getSession().setAttribute("msg", "This complaint already in resolved state.. you can't delete");
                     }else {
                         int result = employeeDao.deleteComplains(complainId);
+
                         if (result > 0) {
-                            req.getSession().setAttribute("msg", "Complaint deleted successfully");
+                            req.getSession().setAttribute("complaintMessage", "success");
+                            req.getSession().setAttribute("complaintMessageText", "Complaint Deleted Successfully!");
                         } else {
-                            req.getSession().setAttribute("msg", "Failed to delete complaint");
+                            req.getSession().setAttribute("complaintMessage", "error");
+                            req.getSession().setAttribute("complaintMessageText", "Failed to Delete Complain.Please try again.");
                         }
                     }
             }
