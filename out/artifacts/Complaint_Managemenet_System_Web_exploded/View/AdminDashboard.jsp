@@ -639,6 +639,26 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<%
+    String msg = (String) session.getAttribute("complaintMessage");
+    String msgText = (String) session.getAttribute("complaintMessageText");
+
+    if (msg != null && msgText != null) {
+        session.removeAttribute("complaintMessage");
+        session.removeAttribute("complaintMessageText");
+%>
+<script>
+    Swal.fire({
+        icon: '<%= msg %>',
+        title: '<%= msgText %>',
+        showConfirmButton: <%= "success".equals(msg) ? "false" : "true" %>,
+        timer: <%= "success".equals(msg) ? "2000" : "null" %>
+    });
+</script>
+<% } %>
+
+
 <script>
 
     function selectComplains(id, user_id, title, description, remark, status, created_at) {

@@ -53,9 +53,11 @@ public class AdminServlet extends HttpServlet {
                 result = adminDao.updateComplains(adminEmployeeModel);
 
                 if (result > 0) {
-                    req.getSession().setAttribute("msg", "Complaint updated successfully");
+                    req.getSession().setAttribute("complaintMessage", "success");
+                    req.getSession().setAttribute("complaintMessageText", "Complaint Updated Successfully!");
                 }else {
-                    req.getSession().setAttribute("msg", "Failed to update complaint");
+                    req.getSession().setAttribute("complaintMessage", "error");
+                    req.getSession().setAttribute("complaintMessageText", "Update failed. Please try again.");
                 }
 
             } catch (SQLException e) {
@@ -70,9 +72,11 @@ public class AdminServlet extends HttpServlet {
                 result = adminDao.deleteComplains(complainId);
 
                 if (result > 0){
-                    req.getSession().setAttribute("msg", "Complaint deleted successfully");
+                    req.getSession().setAttribute("complaintMessage", "success");
+                    req.getSession().setAttribute("complaintMessageText", "Complaint Deleted Successfully!");
                 }else {
-                    req.getSession().setAttribute("msg", "Failed to delete complaint");
+                    req.getSession().setAttribute("complaintMessage", "error");
+                    req.getSession().setAttribute("complaintMessageText", "Failed to Delete. Please try again.");
                 }
 
             } catch (SQLException e) {
