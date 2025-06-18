@@ -47,21 +47,37 @@ public class AdminServlet extends HttpServlet {
             adminEmployeeModel.setCreated_at(created_at);
 
             int result = 0;
+
             try {
                 System.out.println("wada...");
                 result = adminDao.updateComplains(adminEmployeeModel);
+
+                if (result > 0) {
+                    req.getSession().setAttribute("msg", "Complaint updated successfully");
+                }else {
+                    req.getSession().setAttribute("msg", "Failed to update complaint");
+                }
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
 
-            if (result > 0) {
-                req.getSession().setAttribute("msg", "Complaint updated successfully");
-            }else {
-                req.getSession().setAttribute("msg", "Failed to update complaint");
-            }
-
         } else if ("delete_complains".equals(action)) {
+            int complainId = Integer.parseInt(req.getParameter("complain_id"));
+            int result = 0;
 
+            try {
+                result = adminDao.deleteComplains(complainId);
+
+                if (result > 0){
+                    req.getSession().setAttribute("msg", "Complaint deleted successfully");
+                }else {
+                    req.getSession().setAttribute("msg", "Failed to delete complaint");
+                }
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         resp.sendRedirect("admin");
     }
@@ -73,7 +89,7 @@ public class AdminServlet extends HttpServlet {
             req.setAttribute("complains", complains);
             req.getRequestDispatcher("View/AdminDashboard.jsp").forward(req, resp);
         }catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }

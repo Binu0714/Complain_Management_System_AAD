@@ -653,7 +653,7 @@
         document.getElementById("update-btn").disabled = false;
         document.getElementById("delete-btn").disabled = false;
     }
-    
+
 </script>
 </body>
 </html>
