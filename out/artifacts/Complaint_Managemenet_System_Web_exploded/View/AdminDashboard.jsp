@@ -583,7 +583,7 @@
             <div class="button-group">
                 <button name="action" type="submit" class="btn btn-update" id="update-btn" value="update_complains">Update</button>
                 <button name="action" type="submit" class="btn btn-delete" id="delete-btn" value="delete_complains">Delete</button>
-                <button name="action" type="submit" class="btn btn-clear" id="clear-btn" value="clear_complains">Clear Form</button>
+                <button name="action" type="submit" class="btn btn-clear" id="clear-btn" value="clear_complains" onclick="clearForm()">Clear Form</button>
             </div>
         </form>
     </div>
@@ -652,6 +652,14 @@
 
         document.getElementById("update-btn").disabled = false;
         document.getElementById("delete-btn").disabled = false;
+    }
+
+    function clearForm(){
+        document.getElementById("userId").value = "";
+        document.getElementById("complaintTitle").value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("remark").value = "";
+        document.getElementById("status").value = "";
     }
 
 </script>
