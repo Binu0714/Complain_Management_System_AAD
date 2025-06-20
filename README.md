@@ -140,13 +140,6 @@ ComplaintManagementSystem/
 
 ---
 
-## 📜 License & Notes
-
-This project is developed **strictly for educational use** in the context of the **IJSE JakartaEE 2025** assignment.
-All code is authored individually, following academic integrity guidelines.
-
----
-
 ## 👨‍💻 Author
 
 * **Name**: Binu Jinajith
